@@ -66,7 +66,10 @@ if sys.platform != 'win32':
     scripts.extend(['bokeh-server'])
 
 import site
-site_packages = site.getsitepackages()[0]
+try:
+    site_packages = site.getsitepackages()[0]
+except AttributeError:
+    site_packages = [path for path in sys.path if path.endswith('site-packages')][0]
 path_file = join(site_packages, "bokeh.pth")
 path = abspath(dirname(__file__))
 
